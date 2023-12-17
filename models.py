@@ -11,7 +11,7 @@ class Book(Base):
     __tablename__ = 'books'
 
     #define columns
-    id = Column(Integer(), primary_key=True)
+    book_id = Column(Integer(), primary_key=True)
     title =Column(Text(), nullable=False)
     author =Column(Text(),nullable=False)
     genre =Column(Text(),nullable=False)
@@ -21,4 +21,4 @@ class Book(Base):
     copies_available =Column(Integer(),nullable=False)
     synopsis =Column(Text(),nullable=False)
     cover_image =Column(VARCHAR(),nullable=False)
-    created__at = Column(TIMESTAMP())
+    created_at = Column(TIMESTAMP())

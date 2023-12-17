@@ -10,3 +10,5 @@ class BookSchema(BaseModel):
     copies_available:int
     synopsis:str
     cover_image:str
+
+    

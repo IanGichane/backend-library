@@ -22,32 +22,34 @@ def index():
 
 # read
 # get a single event
+# get a single book by ID
 @app.get('/books/{book_id}')
-def get_book(db : session =  Depends(get_db)):
-    books = db.query(Book)
-    return books
+def get_book(book_id: int):
+    return {"book_id": book_id}
 
 #get all events
 @app.get('/books')
-def get_book_by_id(book_id):
+def get_all_books():
     return []
 
+# create
 @app.post('/books')
 def create_book(book: BookSchema):
     print(book)
-    return 'books created successfully'
+    return 'Book created successfully'
+
 
 
 # update
 @app.patch('/books/{book_id}')
-def update_book(book_id:int):
-    return f'book {book_id} created successfully'
+def update_book(book_id: int):
+    return f'Book {book_id} updated successfully'
 
 
 # delete
 @app.delete('/books/{book_id}')
-def delete_book(book_id:int):
-    return f'book {book_id} deleted successfully'
+def delete_book(book_id: int):
+    return f'Book {book_id} deleted successfully'
 
 
 
