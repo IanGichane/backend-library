@@ -1,6 +1,9 @@
 
 
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends
+from sqlalchemy.orm import session
+from database import get_db
+from models import Book
 from schemas import BookSchema
 
 
@@ -20,8 +23,9 @@ def index():
 # read
 # get a single event
 @app.get('/books/{book_id}')
-def get_book():
-    return {}
+def get_book(db : session =  Depends(get_db)):
+    books = db.query(Book)
+    return books
 
 #get all events
 @app.get('/books')
