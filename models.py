@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Text, VARCHAR, Integer, func, String
+from sqlalchemy import Column, Text, VARCHAR, Integer, func, String,ForeignKey
+from sqlalchemy.orm import relationship
 
 
 #create a base model
@@ -21,6 +22,8 @@ class Book(Base):
     copies_available = Column(Integer(), nullable=False)
     synopsis = Column(Text(), nullable=False)
     cover_image = Column(VARCHAR(), nullable=False)
+
+    users_books = relationship('Users',backref = 'book')
     
 
 class User(Base):
@@ -30,5 +33,21 @@ class User(Base):
     username = Column(Text(), unique=True, index=True)
     email = Column(Text(), unique=True, index=True)
 
+    books = relationship('Book', backref='user')
+
+
+class Booking(Base):
+    __tablename__ = "bookings"
+    id = Column(Integer, primary_key=True)
+    booking_date = Column(Integer,nullable=False)
+
+    #foreign keys
+    book_id = Column(Integer,ForeignKey('books.id'))
+    user_id = Column(Integer,ForeignKey('users.id'))
+
+
+
+    book = relationship("Book", backref="bookings")
+    user = relationship("User", backref="bookings")
 
 
