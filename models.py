@@ -23,8 +23,12 @@ class Book(Base):
     cover_image = Column(VARCHAR(), nullable=False)
     
 
+class User(Base):
+    __tablename__ = "users"
 
-
+    id = Column(Integer, primary_key=True)
+    username = Column(Text(), unique=True, index=True)
+    email = Column(Text(), unique=True, index=True)
 
 
 

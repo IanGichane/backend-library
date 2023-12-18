@@ -12,6 +12,10 @@ class BookSchema(BaseModel):
     synopsis: str
     cover_image: str
     
+class userSchema(BaseModel):
+    username :str
+    email:str
+
 
 
     
