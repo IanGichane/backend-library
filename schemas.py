@@ -19,8 +19,12 @@ class userSchema(BaseModel):
 
 
 class bookingSchema(BaseModel):
-    boo_id:int
-    user_id :int
-    booking_date:str
+    book_id: int
+    name: str
+    email: str
+    date: str
 
+
+  
+  
     
