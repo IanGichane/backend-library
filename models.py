@@ -1,15 +1,26 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Text, VARCHAR, Integer, func, String,ForeignKey
+from sqlalchemy import Column, Text, VARCHAR, Integer, func, String,ForeignKey,DateTime
 from sqlalchemy.orm import relationship,backref
-
+from datetime import datetime
 
 #create a base model
 Base = declarative_base()
 
 
+# define user model
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    username = Column(Text(), unique=True, index=True)
+    email = Column(Text(), unique=True, index=True)
+
+    bookings = relationship('Booking', back_populates='user')
 # define book model
 class Book(Base):
     __tablename__ = "books"
+
+    
 
     #define columns
     id = Column(Integer(), primary_key=True)
@@ -25,22 +36,11 @@ class Book(Base):
 
     users_books = relationship('Booking', back_populates='book')
 
-    
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True)
-    username = Column(Text(), unique=True, index=True)
-    email = Column(Text(), unique=True, index=True)
-
-    bookings = relationship('Booking', back_populates='user')
-
-
+# A users borrows a book
 class Booking(Base):
     __tablename__ = "bookings"
     id = Column(Integer, primary_key=True)
-    booking_date = Column(Integer,nullable=False)
+    booking_date = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     #foreign keys
     book_id = Column(Integer, ForeignKey('books.id'))

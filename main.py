@@ -7,7 +7,6 @@ from schemas import BookSchema,bookingSchema
 
 
 
-
 # initialize
 app = FastAPI()
 
@@ -94,24 +93,6 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {'message': f'Book {book_id} deleted successfully'}
 
-
-# # create a booking Route
-# @app.post('/booking')
-# def Borrow(book: BookSchema, db: Session = Depends(get_db)):
-
-#     print(book)
-#     # two stars unpacks the dictionary and  pass it as key value pairs
-#     new_book = Book(**book.model_dump())
-#     #Add new books to the transaction
-#     db.add(new_book)
-#     # commit the transaction
-#     db.commit()
-#     # get the book fro the db again
-#     db.refresh(new_book)
-
-#     return {'message': 'Book created successfully', 'book': new_book}
-
-# create a booking Route
 @app.post('/bookings')
 def Borrow(booking: bookingSchema, db: Session = Depends(get_db)):
 
@@ -145,15 +126,15 @@ def Borrow(booking: bookingSchema, db: Session = Depends(get_db)):
 
         if saved_booking == None:
             # mean the user has not yet borrowed a book
-            saved_booking = db.query(Booking).filter(Booking.user_id == user.id,
-                                           Booking.book_id ==booking.book_id)
+            saved_booking = Booking(booking_date = booking.date ,
+                          user_id = user.id , 
+                          book_id = booking.book_id)
             
             db.add(saved_booking)
             db.commit()
         else:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                                 detail="Book already booked")
+        
 
     return {'message': 'Booking successfully'}
-
-
